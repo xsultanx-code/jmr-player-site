@@ -12,8 +12,10 @@ export default async function handler(req, res) {
       export default async ({ page }) => {
         await page.goto(
           "https://varq.net/en/servers/counter-strike-1.6/91.211.247.50:27015/players?match=JMR&sort=score&DESC",
-          { waitUntil: "domcontentloaded" }
+          { waitUntil: "networkidle2" }
         );
+
+        await page.waitForSelector(".srvPage-topI2", { timeout: 15000 });
 
         const players = await page.evaluate(() => {
           const blocks = [...document.querySelectorAll(".srvPage-topI2")];
